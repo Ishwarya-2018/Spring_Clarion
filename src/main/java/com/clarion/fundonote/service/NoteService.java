@@ -14,5 +14,8 @@ public interface NoteService {
 	List<UserNotes> getNotes(String token);
 
 	UserNotes updateColor(Long noteId, String color, String token);
+	
+	List<UserNotes> getNotesForUser(String email, String token);
+
 
 }

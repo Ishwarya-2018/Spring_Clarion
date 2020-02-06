@@ -94,4 +94,17 @@ public class NoteServiceImpl implements NoteService {
 		}
 		return userNote;
 	}
+	
+	@Override
+	public List<UserNotes> getNotesForUser(String email, String token) {
+		Long userId = JwtUtility.validateToken(token);
+		Optional<UserDetails> userDetails = userRepository.findById(userId);
+		List<UserNotes> notes = null;
+		if (userDetails.isPresent()) {
+			Optional<UserDetails> searchUserDetails = userRepository.findByEmail(email);
+			if (searchUserDetails.isPresent())
+				notes = searchUserDetails.get().getNotes();
+		}
+		return notes;
+	}
 }

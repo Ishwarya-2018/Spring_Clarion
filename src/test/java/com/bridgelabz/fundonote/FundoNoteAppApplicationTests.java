@@ -12,7 +12,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.clarion.fundonote.dto.LoginDTO;
@@ -35,14 +34,12 @@ public class FundoNoteAppApplicationTests {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	@Autowired
-	private PasswordEncoder bCryptPasswordEncoder;
 
 	
 	@Test
 	public void testRegistration()
 	 {
-		RegistrationDTO registraDto = new RegistrationDTO("aishu","sp","ishwarya.p@clariontechnologies.co.in",7259848116L,"md>Au4SB");
+		RegistrationDTO registraDto = new RegistrationDTO("Ishwarya ","Sp"," ishwarya.p@clariontechnologies",9980470026L,"ishu123");
 		UserDetails userDetails=modelMapper.map(registraDto, UserDetails.class);
 		userDetails.setId(101l);
 		userDetails.setCreateTime(LocalDateTime.now());
@@ -73,14 +70,14 @@ public class FundoNoteAppApplicationTests {
 	public void testLogin()
 	{
 		LoginDTO loginDto = new LoginDTO();
-		loginDto.setEmail("ishwarya.p@clariontechnologies.co.in");
-		loginDto.setPassword("md>Au4SB");
+		loginDto.setEmail(" ishwarya.p@clariontechnologies");
+		loginDto.setPassword("ishu123");
 		String token = JwtUtility.generateToken(101l);
 		UserDetails userDetails = new UserDetails();
 		userDetails.setId(101l);
-		userDetails.setFirstName("aish");
-		userDetails.setEmail("ishwarya.p@clariontechnologies.co.in");
-		userDetails.setPassword(bCryptPasswordEncoder.encode("md>Au4SB"));
+		userDetails.setFirstName(" Ishwarya ");
+		userDetails.setEmail(" ishwarya.p@clariontechnologies");
+		//userDetails.setPassword(bCryptPasswordEncoder.encode("ishu123"));
 		userDetails.setIsverify(true);
 		when(repository.findByEmail(loginDto.getEmail())).thenReturn(Optional.of(userDetails));
 		assertTrue(token.equals(service.login(loginDto)));	

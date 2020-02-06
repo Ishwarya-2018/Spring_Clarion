@@ -63,5 +63,11 @@ public class NoteRequestHandler {
 		List<UserNotes> notes = noteService.getNotes(token);
 		return new ResponseEntity<List<UserNotes>>(notes, HttpStatus.OK);
 	}
+	
+	@GetMapping("/get_notesforuser")
+	public ResponseEntity<List<UserNotes>> getNotesForUser(@RequestParam String email, @RequestHeader String token) {
+		List<UserNotes> notes = noteService.getNotesForUser(email,token);
+		return new ResponseEntity<List<UserNotes>>(notes, HttpStatus.OK);
+	}
 
 }
